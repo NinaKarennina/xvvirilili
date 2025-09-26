@@ -106,8 +106,8 @@ if (!document.getElementById(styleId)) {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -55%);
-      max-width: 350px;   /* ajusta según tu diseño */
+      transform: translate(-50%, -60%);
+      max-width: 300px;   /* ajusta según tu diseño */
       max-height: 50vh;
       object-fit: contain;
       z-index: 2;
@@ -119,7 +119,7 @@ if (!document.getElementById(styleId)) {
       left: 50%;
       transform: translate(-50%,-50%);
       max-width: 350px; 
-      max-height: 30vh;
+      max-height: 50vh;
       object-fit: contain;
       z-index: 2;
       pointer-events: none;
