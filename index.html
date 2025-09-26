@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invitación</title>
+  <meta name="color-scheme" content="light dark" />
+  <style>
+    /* Reset básico para que no haya márgenes inesperados */
+    html, body { margin: 0; padding: 0; }
+    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif; background:#000; color:#fff; }
+    main { display:block; }
+  </style>
+</head>
+<body>
+  <main id="app"></main>
+
+  <!-- Carga del primer bloque (solo imágenes) -->
+  <script type="module">
+    import { createHeroBlock } from './blocks/hero.js';
+
+    const app = document.getElementById('app');
+
+    // Configuración del bloque 1 (ajusta rutas a tus imágenes)
+    const hero = createHeroBlock({    
+      background:  './images/backgroundclean.webp',     // fondo a cover
+      topLeft:      './images/flowers.webp',    // esquina sup izq
+      rightCenter:  './images/lateralflowers.webp',
+      center: './images/title.webp',
+      bottomCenter:'./images/firstmessage.webp',       // pegada a la derecha, centrada verticalmente
+      sizes: { small: '16vmin', side: '44vmin' }     // tamaños decorativos (opcional)
+    });
+
+    app.appendChild(hero);
+  </script>
+</body>
+</html>
