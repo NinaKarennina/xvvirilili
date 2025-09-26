@@ -106,9 +106,9 @@ if (!document.getElementById(styleId)) {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -60%);
-      max-width: 300px;   /* ajusta según tu diseño */
-      max-height: 50vh;
+      transform: translate(-50%, -50%);
+      max-width: 70vw;   /* ajusta según tu diseño */
+      max-height: 80vh;
       object-fit: contain;
       z-index: 2;
       pointer-events: none;
