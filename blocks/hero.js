@@ -117,7 +117,7 @@ if (!document.getElementById(styleId)) {
       position: absolute;
       bottom: clamp(1px, 3vmin, 24px);
       left: 50%;
-      transform: translate(-50%,-120%);
+      transform: translate(-50%,-100%);
       max-width: 350px; 
       max-height: 30vh;
       object-fit: contain;
