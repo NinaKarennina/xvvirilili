@@ -1,37 +1,58 @@
 <!doctype html>
 <html lang="es">
 <head>
-  <link rel="icon" type="image/x-icon" href="./images/twinsicon.png" />
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>XV Viri & Lili</title>
-  <meta name="color-scheme" content="light dark" />
+  <link rel="icon" type="image/x-icon" href="./images/twinsicon.png" />
   <style>
-    /* Reset básico para que no haya márgenes inesperados */
-    html, body { margin: 0; padding: 0; }
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif; background:#000; color:#fff; }
+    html, body { margin: 0; padding: 0; background: #000; color: #fff; }
     main { display:block; }
   </style>
 </head>
 <body>
   <main id="app"></main>
 
-  <!-- Carga del primer bloque (solo imágenes) -->
   <script type="module">
     import { createHeroBlock } from './blocks/hero.js';
+    import { initParallax, initReveal } from './lib/scrollEffects.js';
 
     const app = document.getElementById('app');
 
-    // Configuración del bloque 1 (ajusta rutas a tus imágenes)
-    const hero = createHeroBlock({    
-      background:  './images/backgroundclean.webp',     // fondo a cover
-      topLeft:      './images/flowers.webp',    // esquina sup izq
-      rightCenter:  './images/lateralflowers.webp',
-      center: './images/mainimage.webp',       // pegada a la derecha, centrada verticalmente
-      sizes: { small: '16vmin', side: '44vmin' }     // tamaños decorativos (opcional)
-    });
+    // Define tus bloques como datos (¡escalable!)
+    const blocks = [
+      {
+        background:   './images/backgroundclean.webp',
+        topLeft:      './images/flowers.webp',
+        rightCenter:  './images/lateralflowersrose.webp',
+        center:       './images/mainimage.webp',
+        bgSpeed: 0.25,
+      },
+      {
+        background:   './images/backgroundclean.webp',
+        leftCenter:   './images/lateralflowersblue.webp',
+        center:       './images/secondview.webp',
+        bgSpeed: 0.25,
+        bgPosition: 0.25,
+        
+      },
+      {
+        background:   './images/backgroundclean.webp',
+        rightCenter:  './images/lateralflowersrose.webp',
+        bottomCenter: './images/deco-bottom.png',
+        center:       './images/thirdview.webp',
+        bgSpeed: 0.25,
+        bgPosition: 0.75,
+      }
+    ];
 
-    app.appendChild(hero);
+    // Crea y monta todos los bloques
+    const nodes = blocks.map(cfg => createHeroBlock(cfg));
+    app.append(...nodes);
+
+    // Efectos de scroll
+    initReveal({ rootMargin: '0px 0px -12% 0px', once: false }); // reversa al hacer scroll back
+    initParallax();
   </script>
 </body>
 </html>
