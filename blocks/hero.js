@@ -161,6 +161,7 @@ if (!document.getElementById(styleId)) {
       max-height: 50vh;
       object-fit: contain;
       pointer-events: none;
+      z-index:3;
       transform: var(--base-transform, none);
     }
     .hero-block .img-bottom-right {
@@ -171,6 +172,7 @@ if (!document.getElementById(styleId)) {
       max-height: 50vh;
       object-fit: contain;
       pointer-events: none;
+      z-index: 3;
       transform: var(--base-transform, none);
     }
 
@@ -216,7 +218,7 @@ if (!document.getElementById(styleId)) {
       width: auto;
       object-fit: contain;
       pointer-events: none;
-      z-index: 2;
+      z-index: 4;
       --base-transform: translateX(-50%);
       transform: var(--base-transform);
     }
