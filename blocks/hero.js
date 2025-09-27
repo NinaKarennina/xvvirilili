@@ -222,6 +222,13 @@ if (!document.getElementById(styleId)) {
       --base-transform: translateX(-50%);
       transform: var(--base-transform);
     }
+    .hero-block img {
+      user-select: none;
+      -webkit-user-drag: none;
+      pointer-events: none;
+    }
+
+
 
     /* ====== Animaciones seguras (no pisan el base) ====== */
     .reveal .anim {
