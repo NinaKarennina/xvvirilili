@@ -97,7 +97,7 @@ function posClass(pos) {
 function baseTransformFor(pos) {
   return ({
     "left-center": "translateY(-50%)",
-    "right-center": "translate(50%,-50%)",
+    "right-center": "translateY(-50%)",
     "center": "translate(-50%, -50%)",
     "bottom-center": "translateX(-50%)",
   })[pos] || null;
@@ -145,8 +145,8 @@ if (!document.getElementById(styleId)) {
     }
     .hero-block .img-top-right {
       position: absolute;
-      top: clamp(8px, 3vmin, 24px);
-      right: clamp(8px, 3vmin, 24px);
+      top: 0;
+      right: 0;
       width: var(--img-small);
       height: auto;
       object-fit: contain;
@@ -155,20 +155,20 @@ if (!document.getElementById(styleId)) {
     }
     .hero-block .img-bottom-left {
       position: absolute;
-      bottom: clamp(8px, 3vmin, 24px);
-      left: clamp(8px, 3vmin, 24px);
-      width: var(--img-small);
-      height: auto;
+      bottom: 0;
+      left: 0;
+      max-width: 50vw;
+      max-height: 50vh;
       object-fit: contain;
       pointer-events: none;
       transform: var(--base-transform, none);
     }
     .hero-block .img-bottom-right {
       position: absolute;
-      bottom: clamp(8px, 3vmin, 24px);
-      right: clamp(8px, 3vmin, 24px);
-      width: var(--img-small);
-      height: auto;
+      bottom: 0;
+      right: 0;
+      max-width: 50vw;
+      max-height: 50vh;
       object-fit: contain;
       pointer-events: none;
       transform: var(--base-transform, none);
@@ -177,7 +177,7 @@ if (!document.getElementById(styleId)) {
     .hero-block .img-left-center {
       position: absolute;
       top: 50%;
-      left: clamp(3vmin, 24px);
+      left: 0;
       max-height: 200px;
       width: auto;
       object-fit: contain;
@@ -209,9 +209,9 @@ if (!document.getElementById(styleId)) {
     }
     .hero-block .img-bottom-center {
       position: absolute;
-      bottom: clamp(8px, 3vmin, 24px);
+      bottom: 0;
       left: 50%;
-      max-width: 80vw;
+      max-width: 50vw;
       max-height: var(--bottom-h);
       width: auto;
       object-fit: contain;
