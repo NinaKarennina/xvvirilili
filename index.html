@@ -15,9 +15,11 @@
 
   <script type="module">
     import { createHeroBlock } from './blocks/hero.js';
+    import { createStack3 }   from './blocks/stack3.js';
     import { initParallax, initReveal } from './lib/scrollEffects.js';
 
     const app = document.getElementById('app');
+
 
     // Define tus bloques como datos (¡escalable!)
     const blocks = [
@@ -31,17 +33,32 @@
       {
         background:   './images/middlebg.webp',
         leftCenter:   './images/lateralflowersblue.webp',
-        center:       './images/secondview.webp',
         bgSpeed: 0.50,
         bgPosition: 0.50,
-        
+        stack3: {
+          heights: [20,50, 10],
+          width: "min(90vw,640px)",
+          items: [
+            { kind:"image", src:"./images/secondview1.webp", alt:"Arriba" },
+            { kind:"image", src:"./images/secondview2.webp",alt:"Abajo" },
+            { kind:"buttonImage", src:"./images/secondview3.webp", alt:"Iglesia", onClick: () => window.open('https://maps.app.goo.gl/GURtuyuBFNBbT698A','_blank') },
+          ]
+        }
       },
       {
         background:   './images/middlebg.webp',
         rightCenter:  './images/lateralflowersrose.webp',
-        center:       './images/thirdview.webp',
         bgSpeed: 0.50,
         bgPosition: 0.50,
+        stack3: {
+          heights: [30,40, 10],
+          width: "min(90vw,640px)",
+          items: [
+            { kind:"image", src:"./images/thirdview1.webp", alt:"Arriba" },
+            { kind:"image", src:"./images/thirdview2.webp",alt:"Abajo" },
+            { kind:"buttonImage", src:"./images/secondview3.webp", alt:"Salon", onClick: () => window.open('https://maps.app.goo.gl/jc2dkAwCwuSifuNR7','_blank') },
+          ]
+        }
       },
       {
         background:   './images/bottombg.webp',
@@ -57,7 +74,15 @@
     ];
 
     // Crea y monta todos los bloques
-    const nodes = blocks.map(cfg => createHeroBlock(cfg));
+    const nodes = blocks.map(cfg => {
+      const sec = createHeroBlock(cfg);
+      if (cfg.stack3) {
+        const s3 = createStack3(cfg.stack3);
+        sec.appendChild(s3);
+      }
+      return sec;
+    });
+
     app.append(...nodes);
 
     // Efectos de scroll
