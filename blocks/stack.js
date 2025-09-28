@@ -127,7 +127,7 @@ if (!document.getElementById(STYLE_ID)) {
 
     /* Tipos de contenido */
     .s3-img{
-      max-width:30vh ; max-height:20vh ;
+      max-width:50vh ; max-height:20vh ;
       object-fit: contain;
       object-position: center;
       user-select: none; -webkit-user-drag: none;
