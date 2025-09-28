@@ -165,8 +165,8 @@ if (!document.getElementById(STYLE_ID)) {
   display:flex;
   align-items:center;
   justify-content:center;
+  width:100%;
   gap: calc(var(--k) * 16px);
-  padding-inline: clamp(calc(var(--k) * 6px), 3vmin, calc(var(--k) * 24px));
 }
 
 .cd-pill{
@@ -184,12 +184,12 @@ if (!document.getElementById(STYLE_ID)) {
 .cd-digit-row{
   display:flex;
   align-items:center;
-  gap: calc(var(--k) * 6px);
+  gap: calc(var(--k) * 4px);
   height: 100%;
 }
 
 .cd-digit{
-  height: 70%;          /* relativo al alto del pill → ya escala */
+  height: 50%;          /* relativo al alto del pill → ya escala */
   width: auto;
   display:block;
   object-fit: contain;
