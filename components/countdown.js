@@ -151,7 +151,7 @@ if (!document.getElementById(STYLE_ID)) {
 
 .cd-bg{
   display:block;
-  width:100%;
+  max-width:100%;
   height:auto;
   pointer-events:none;
   user-select:none;
@@ -161,17 +161,16 @@ if (!document.getElementById(STYLE_ID)) {
 /* overlay centrado */
 .cd-layer{
   position:absolute;
-  inset:0;
   display:flex;
   align-items:center;
   justify-content:center;
-  width:100%;
+  max-width:40vh;
   gap: calc(var(--k) * 16px);
 }
 
 .cd-pill{
-  min-width: calc(var(--k) * 88px);
-  height:    calc(var(--k) * 56px);
+  min-width: calc(var(--k) * 70px);
+  min-height:    calc(var(--k) * 60px);
   border-radius: 999px; /* se mantiene “pastilla” */
   padding-inline: calc(var(--k) * 16px);
   background: var(--cd-pill-color, #A77A71);
