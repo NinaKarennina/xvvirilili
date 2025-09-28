@@ -84,8 +84,8 @@ export function createHeroBlock({
     const wrap = document.createElement("div");
     wrap.className = "center-node anim anim-fade-in";
     // Si quieres tamaño máximo desde fuera:
-    // wrap.style.maxWidth  = "min(92vw, 720px)";
-    // wrap.style.maxHeight = "70vh";
+    wrap.style.maxWidth  = "min(92vw, 720px)";
+    wrap.style.maxHeight = "70vh";
     wrap.appendChild(centerNode);
     section.appendChild(wrap);
   }
@@ -146,8 +146,8 @@ if (!document.getElementById(styleId)) {
     /* === posiciones base de overlays (igual que antes) === */
     .hero-block .img-top-left {
       position: absolute;
-      top: clamp(3vmin, 24px);
-      left: clamp(3vmin, 24px);
+      top:0;
+      left:0;
       max-width:40vh ;
       max-height:40vw;
       object-fit: contain;
@@ -202,7 +202,7 @@ if (!document.getElementById(styleId)) {
     .hero-block .img-right-center {
       position: absolute;
       top: 50%;
-      right: clamp(0px,3vmin,0px);
+      right:0;
       max-height:200px ;
       max-width: 20vw;
       object-fit: contain;
@@ -215,7 +215,7 @@ if (!document.getElementById(styleId)) {
       top: 50%;
       left: 50%;
       max-height: 80vh;
-      max-width: 60vw;
+      max-width: 80vw;
       object-fit: contain;
       pointer-events: none;
       z-index: 2;
@@ -227,7 +227,7 @@ if (!document.getElementById(styleId)) {
       bottom: 0;
       left: 50%;
       max-width: 50vw;
-      max-height: var(--bottom-h);
+      max-height: 30vh;
       width: auto;
       object-fit: contain;
       pointer-events: none;
@@ -247,8 +247,7 @@ if (!document.getElementById(styleId)) {
       --base-transform: translate(-50%, -50%); /* 👈 base */
       transform: var(--base-transform);  
       z-index:0;
-      display:block;
-      max-width: 90vw;   /* ajusta si quieres limitar ancho del componente */
+      max-width: 80vw;   /* ajusta si quieres limitar ancho del componente */
       max-height: 80vh;  /* para que no rebase */
       pointer-events:auto; /* por si el componente tiene botones */
     }

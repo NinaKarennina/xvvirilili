@@ -15,7 +15,7 @@
 
   <script type="module">
     import { createHeroBlock } from './blocks/hero.js';
-    import { createStack3 }   from './blocks/stack3.js';
+    import { createStack }   from './blocks/stack.js';
     import { createCountdown } from './components/countdown.js';
     import { initParallax, initReveal } from './lib/scrollEffects.js';
 
@@ -41,11 +41,12 @@
         bgSpeed: 0.50,
         bgPosition: 0.50,
         stack3: {
-          heights: [20,50, 10],
+          heights: [20,30,20, 10],
           width: "min(90vw,640px)",
           items: [
             { kind:"image", src:"./images/secondview1.webp", alt:"Arriba" },
-            { kind:"image", src:"./images/secondview2.webp",alt:"Abajo" },
+            { kind:"image", src:"./images/secondview2a.webp",alt:"Abajo" },
+            { kind:"image", src:"./images/secondview2b.webp",alt:"Abajo" },
             { kind:"buttonImage", src:"./images/secondview3.webp", alt:"Iglesia", onClick: () => window.open('https://maps.app.goo.gl/GURtuyuBFNBbT698A','_blank') },
           ]
         }
@@ -56,7 +57,7 @@
         bgSpeed: 0.50,
         bgPosition: 0.50,
         stack3: {
-          heights: [30,40, 10],
+          heights: [30,40, 20],
           width: "min(90vw,640px)",
           items: [
             { kind:"image", src:"./images/thirdview1.webp", alt:"Arriba" },
@@ -99,7 +100,7 @@
 
     // stack3 (si viene)
     if (cfg.stack3) {
-      const s3 = createStack3(cfg.stack3);
+      const s3 = createStack(cfg.stack3);
       sec.appendChild(s3);
     }
 
@@ -110,7 +111,7 @@
     app.append(...nodes);
     
     // Efectos de scroll
-    initReveal({ rootMargin: '0px 0px -12% 0px', once: false }); // reversa al hacer scroll back
+    // initReveal({ rootMargin: '0px 0px -12% 0px', once: false }); // reversa al hacer scroll back
     initParallax();
   </script>
 </body>
