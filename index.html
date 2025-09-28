@@ -16,10 +16,15 @@
   <script type="module">
     import { createHeroBlock } from './blocks/hero.js';
     import { createStack3 }   from './blocks/stack3.js';
+    import { createCountdown } from './components/countdown.js';
     import { initParallax, initReveal } from './lib/scrollEffects.js';
 
     const app = document.getElementById('app');
 
+    const registry = {
+      countdown: (props) => createCountdown(props),
+      // en el futuro puedes agregar otros
+    };
 
     // Define tus bloques como datos (¡escalable!)
     const blocks = [
@@ -67,24 +72,43 @@
         bottomCenter: './images/flowersbottomcenter.webp',
         bottomRight:'./images/flowersbottomright.webp',
         bottomLeft:'./images/princessleft.webp',
-        center:       './images/finalview.webp',
         bgSpeed: 0.50,
         bgPosition: 1,
+        centerComponent: 'countdown',
+        centerProps: {
+        target: '2025-11-08T17:00:00-06:00',
+        bgSrc: './images/countdown-bg.webp',
+        digitsPath: d => `./digits/${d}.png`,
+        zeroPad: { days: 1, hours: 2, minutes: 2, seconds: 2 },
+        showLabels: false,              // tu fondo ya trae “Días Horas…”
+        scaleWidth: 'min(92vw,700px)',  // tamaño del contador
+      },
       }
     ];
 
     // Crea y monta todos los bloques
     const nodes = blocks.map(cfg => {
-      const sec = createHeroBlock(cfg);
-      if (cfg.stack3) {
-        const s3 = createStack3(cfg.stack3);
-        sec.appendChild(s3);
-      }
-      return sec;
-    });
+    // si hay un centerComponent, creamos el nodo
+    let centerNode = null;
+    if (cfg.centerComponent && registry[cfg.centerComponent]) {
+      centerNode = registry[cfg.centerComponent](cfg.centerProps || {});
+    }
+
+    // creamos el hero; le pasamos centerNode (o null)
+    const sec = createHeroBlock({ ...cfg, centerNode });
+
+    // stack3 (si viene)
+    if (cfg.stack3) {
+      const s3 = createStack3(cfg.stack3);
+      sec.appendChild(s3);
+    }
+
+    return sec;
+  });
+    
 
     app.append(...nodes);
-
+    
     // Efectos de scroll
     initReveal({ rootMargin: '0px 0px -12% 0px', once: false }); // reversa al hacer scroll back
     initParallax();

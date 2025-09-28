@@ -9,7 +9,8 @@ export function createHeroBlock({
   sizes = {},
   bgSpeed = 0,        // 0 = sin parallax; 0.1–0.3 = suave
   bgPosition = 0,     // 0..1 anclaje vertical del fondo (0=arriba, 1=abajo)
-  anims = {}
+  anims = {},
+  centerNode = null,
 }) {
   const {
     small = "18vmin",
@@ -78,6 +79,16 @@ export function createHeroBlock({
     if (delay) img.style.setProperty("--delay", delay);
     section.appendChild(img);
   });
+
+   if (centerNode) {
+    const wrap = document.createElement("div");
+    wrap.className = "center-node anim anim-fade-in";
+    // Si quieres tamaño máximo desde fuera:
+    // wrap.style.maxWidth  = "min(92vw, 720px)";
+    // wrap.style.maxHeight = "70vh";
+    wrap.appendChild(centerNode);
+    section.appendChild(wrap);
+  }
 
   return section;
 }
@@ -186,6 +197,7 @@ if (!document.getElementById(styleId)) {
       pointer-events: none;
       --base-transform: translate(0%,-50%);
       transform: var(--base-transform);
+      z-index:1;
     }
     .hero-block .img-right-center {
       position: absolute;
@@ -195,6 +207,7 @@ if (!document.getElementById(styleId)) {
       max-width: 20vw;
       object-fit: contain;
       pointer-events: none;
+      z-index:1;
       transform: translate(0%,-50%);
     }
     .hero-block .img-center {
@@ -226,6 +239,18 @@ if (!document.getElementById(styleId)) {
       user-select: none;
       -webkit-user-drag: none;
       pointer-events: none;
+    }
+    .hero-block .center-node{
+      position:absolute;
+      top:50%;
+      left:50%;
+      --base-transform: translate(-50%, -50%); /* 👈 base */
+      transform: var(--base-transform);  
+      z-index:0;
+      display:block;
+      max-width: 90vw;   /* ajusta si quieres limitar ancho del componente */
+      max-height: 80vh;  /* para que no rebase */
+      pointer-events:auto; /* por si el componente tiene botones */
     }
 
 
