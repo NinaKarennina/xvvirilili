@@ -110,7 +110,7 @@ if (!document.getElementById(STYLE_ID)) {
       row-gap: var(--s3-gap, 1rem);
 
       /* distribución vertical (solo si height ≠ auto) */
-      align-content: var(--s3-align, space-between);
+      align-content: center;
       justify-items: center;
       align-items: center;
     }
@@ -156,10 +156,6 @@ if (!document.getElementById(STYLE_ID)) {
       font: 500 1rem/1.4 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
     }
 
-    @media (max-width: 480px){
-      .s3 { row-gap: clamp(.6rem, 2.5vw, 1rem); }
-      .s3-slot { border-radius: 12px; }
-    }
   `;
   document.head.appendChild(style);
 }
