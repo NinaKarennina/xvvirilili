@@ -75,15 +75,25 @@
         bottomLeft:'./images/princessleft.webp',
         bgSpeed: 0.50,
         bgPosition: 1,
-        centerComponent: 'countdown',
-        centerProps: {
-        target: '2025-11-08T17:00:00-06:00',
-        bgSrc: './images/countdown-bg.webp',
-        digitsPath: d => `./digits/${d}.png`,
-        zeroPad: { days: 1, hours: 2, minutes: 2, seconds: 2 },
-        showLabels: false,              // tu fondo ya trae “Días Horas…”
-        scaleWidth: 'min(92vw,700px)',  // tamaño del contador
-      },
+        stack3: {
+          heights: [15, 20, 10, 1,30],
+          width: "min(90vw, 640px)",
+          items: [
+            { kind: "image", src: "./images/finalview1.webp" },
+            { kind: "node",  node: registry.countdown({
+              target: '2025-11-08T17:00:00-06:00',
+              bgSrc: './images/countdown-bg.webp',
+              digitsPath: d => `./digits/${d}.png`,
+              zeroPad: { days: 2, hours: 2, minutes: 2, seconds: 2 },
+              showLabels: false,
+              scaleWidth: 'min(92vw,700px)',
+            })},
+            { kind: "buttonImage", src: "./images/confirmbutton.webp",
+              onClick: () => {} },
+            { kind: "image",  src: "./images/finalview2.webp" },
+            
+          ]
+        },
       }
     ];
 
