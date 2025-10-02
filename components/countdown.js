@@ -208,7 +208,7 @@ if (!document.getElementById(STYLE_ID)) {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: calc(var(--k) * 4px);
+  gap: 0;
   height: 100%;
 }
 
