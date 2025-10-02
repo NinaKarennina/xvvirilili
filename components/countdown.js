@@ -48,11 +48,21 @@ setScale();
 
 
   // Fondo
-  const bg = document.createElement('img');
-  bg.className = 'cd-bg';
-  bg.src = bgSrc;
-  bg.alt = '';
-  root.appendChild(bg);
+  // Fondo
+const bg = document.createElement('img');
+bg.className = 'cd-bg';
+bg.src = bgSrc;
+bg.alt = '';
+bg.onload = () => {
+  // fija la relación de aspecto del root para que iOS no desplace la capa
+  const w = bg.naturalWidth || 720;
+  const h = bg.naturalHeight || 400;
+  root.style.setProperty('--cd-ar', `${w} / ${h}`);
+  // si quieres un ajuste fino vertical de la fila de pastillas (ej. 53%):
+  root.style.setProperty('--cd-layer-top', '53%'); // ajusta 50–56% según tu arte
+};
+root.appendChild(bg);
+
 
   // Capa de UI (píldoras + dígitos) — centrada sobre el fondo
   const layer = document.createElement('div');
@@ -138,62 +148,60 @@ if (!document.getElementById(STYLE_ID)) {
   const style = document.createElement('style');
   style.id = STYLE_ID;
   style.textContent = `
-    /* ⬇️ Reemplaza por esto en el CSS inyectado del countdown */
-
-/* 1) El root no cambia mucho, pero vamos a limitarlo a 80% del iPhone 15 PM */
 .cd-root{
   position: relative;
-  /* 80% del ancho del iPhone 15 Pro Max (430px) con fallback + 80vw como límite móvil */
   width: var(--cd-width, min(80vw, calc(var(--device-w, 430px) * 0.80)));
   margin-inline: auto;
-  display: grid;
-  place-items: center;
+  display: block;
   user-select: none;
+  /* relación de aspecto igual al fondo (se setea en JS); fallback aproximado */
+  aspect-ratio: var(--cd-ar, 720 / 430);
   --k: var(--cd-scale, 1);
 }
 
-/* 2) El fondo ocupa el ancho del root */
 .cd-bg{
-  display:block;
-  width: 100%;        /* 👈 asegura match exacto con el root */
-  height:auto;
-  pointer-events:none;
-  user-select:none;
-  -webkit-user-drag:none;
-}
-
-/* 3) Capa de UI correctamente centrada y del tamaño del root */
-.cd-layer{
-  position:absolute;
-  inset: 0;           /* 👈 ocupa todo el root (iOS fix) */
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  /* wrap si hace falta, pero normalmente no lo necesitarás */
-  flex-wrap: nowrap;
-  gap: calc(var(--k) * 16px);
-  max-width: none;    /* 👈 elimina el viejo 40vh que desalineaba en iOS */
+  object-fit: contain;   /* respeta márgenes del arte */
+  display: block;
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
 }
 
-/* 4) Pastillas y dígitos (igual que antes) */
+/* Capa con las pastillas centrada y con ajuste fino vertical */
+.cd-layer{
+  position: absolute;
+  left: 50%;
+  top: var(--cd-layer-top, 50%);   /* ajustable en JS: 50–56% según tu PNG */
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--k) * 16px);
+  max-width: 86%;                  /* evita que toque los bordes dorados */
+}
+
 .cd-pill{
   min-width: calc(var(--k) * 70px);
   min-height: calc(var(--k) * 60px);
   border-radius: 999px;
   padding-inline: calc(var(--k) * 16px);
   background: var(--cd-pill-color, #A77A71);
-  display:grid;
-  place-items:center;
+  display: grid;
+  place-items: center;
   box-shadow: 0 1px 0 rgba(255,255,255,.35) inset,
               0 10px 30px rgba(0,0,0,.18);
 }
 
 .cd-digit-row{
-  display:flex;
-  align-items:center;
-  justify-content:center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   gap: calc(var(--k) * 4px);
   height: 100%;
 }
@@ -201,11 +209,10 @@ if (!document.getElementById(STYLE_ID)) {
 .cd-digit{
   height: 50%;
   width: auto;
-  display:block;
+  display: block;
   object-fit: contain;
 }
 
-/* (Opcional) etiquetas si las usas */
 .cd-labels{
   display:flex;
   justify-content:center;

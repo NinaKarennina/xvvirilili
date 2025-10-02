@@ -90,95 +90,95 @@
       }
       ,
       {
-  // sin fondo ni parallax
-  background: '',
-  rightCenter: './images/lateralflowersrose.webp',
+        // sin fondo ni parallax
+        background: '',
+        rightCenter: './images/lateralflowersrose.webp',
 
-  // el stack crece por contenido (quita heights/width)
-  stack3: {
-    gap: "16px",
-    items: [
-      // 1) letrero ancho
-      { kind: "image", src: "./images/thirdview1.webp", alt: "Letrero", variant: "wideText" },
+        // el stack crece por contenido (quita heights/width)
+        stack3: {
+          gap: "16px",
+          items: [
+            // 1) letrero ancho
+            { kind: "image", src: "./images/thirdview1.webp", alt: "Letrero", variant: "wideText" },
 
-      // 2) letrero ancho (si este fuera cuadrado, usa variant: "square")
-      { kind: "image", src: "./images/thirdview2.webp", alt: "Letrero", variant: "wideText" },
+            // 2) letrero ancho (si este fuera cuadrado, usa variant: "square")
+            { kind: "image", src: "./images/thirdview2.webp", alt: "Letrero", variant: "wideText" },
 
-      // 3) botón (letrero ancho) con su onClick intacto
-      { 
-        kind: "buttonImage",
-        src: "./images/secondview3.webp",
-        alt: "Salón",
-        variant: "wideText",
-        onClick: () => window.open('https://maps.app.goo.gl/jc2dkAwCwuSifuNR7', '_blank')
+            // 3) botón (letrero ancho) con su onClick intacto
+            {
+              kind: "buttonImage",
+              src: "./images/secondview3.webp",
+              alt: "Salón",
+              variant: "wideText",
+              onClick: () => window.open('https://maps.app.goo.gl/jc2dkAwCwuSifuNR7', '_blank')
+            }
+          ]
+        }
       }
-    ]
-  }
-}
-,
+      ,
       {
-  // sin fondo ni parallax; dejamos las decoraciones absolutas
-  background: '',
-  leftCenter:   './images/lateralflowersblue.webp',
-  rightCenter:  './images/lateralflowersrose.webp',
-  bottomCenter: './images/flowersbottomcenter.webp',
-  bottomRight:  './images/flowersbottomright.webp',
-  bottomLeft:   './images/princessleft.webp',
+        // sin fondo ni parallax; dejamos las decoraciones absolutas
+        background: '',
+        leftCenter: './images/lateralflowersblue.webp',
+        rightCenter: './images/lateralflowersrose.webp',
+        bottomCenter: './images/flowersbottomcenter.webp',
+        bottomRight: './images/flowersbottomright.webp',
+        bottomLeft: './images/princessleft.webp',
 
-  stack3: {
-    gap: "20px",               // un poco más de aire en el bloque final
-    items: [
-      { kind: "html", html: "<div style='height:1vh'></div>" },
-      // 1) letrero superior
-      { kind: "image", src: "./images/finalview1.webp", alt: "Final 1", variant: "wideText" },
+        stack3: {
+          gap: "20px",               // un poco más de aire en el bloque final
+          items: [
+            { kind: "html", html: "<div style='height:1vh'></div>" },
+            // 1) letrero superior
+            { kind: "image", src: "./images/finalview1.webp", alt: "Final 1", variant: "wideText" },
 
-      // 2) countdown (escala a ~90% del ancho base del iPhone)
-      { 
-        kind: "node",
-        node: registry.countdown({
-          target: '2025-11-08T17:00:00-06:00',
-          bgSrc: './images/countdown-bg.webp',
-          digitsPath: d => `./digits/${d}.png`,
-          zeroPad: { days: 2, hours: 2, minutes: 2, seconds: 2 },
-          showLabels: false,
-          // clave: atarlo a tu "device width"
-          scaleWidth: 'calc(var(--device-w, 430px) * 0.90)',
-        })
-      },
+            // 2) countdown (escala a ~90% del ancho base del iPhone)
+            {
+              kind: "node",
+              node: registry.countdown({
+                target: '2025-11-08T17:00:00-06:00',
+                bgSrc: './images/countdown-bg.webp',
+                digitsPath: d => `./digits/${d}.png`,
+                zeroPad: { days: 2, hours: 2, minutes: 2, seconds: 2 },
+                showLabels: false,
+                // clave: atarlo a tu "device width"
+                scaleWidth: 'min(80vw, calc(var(--device-w, 430px) * 0.80))',
+              })
+            },
 
-      // 3) botón de confirmación (imagen ancha, centrada)
-      { 
-        kind: "buttonImage",
-        src: "./images/confirmbutton.webp",
-        alt: "Confirmar asistencia",
-        variant: "wideText",
-        onClick: () => { /* tu handler */ }
-      },
+            // 3) botón de confirmación (imagen ancha, centrada)
+            {
+              kind: "buttonImage",
+              src: "./images/confirmbutton.webp",
+              alt: "Confirmar asistencia",
+              variant: "wideText",
+              onClick: () => { /* tu handler */ }
+            },
 
-      // 4) letrero inferior
-      { kind: "image", src: "./images/finalview2.webp", alt: "Final 2", variant: "wideText" },
-    ]
-  },
-}
+            // 4) letrero inferior
+            { kind: "image", src: "./images/finalview2.webp", alt: "Final 2", variant: "wideText" },
+          ]
+        },
+      }
 
     ];
 
     // Crea y monta todos los bloques
     const nodes = blocks.map((cfg, idx) => {
-  const sec = createHeroBlock({ ...cfg, centerNode: null });
+      const sec = createHeroBlock({ ...cfg, centerNode: null });
 
-  if (cfg.stack3) {
-    const s3 = createStack(cfg.stack3);
-    sec.appendChild(s3);
-  }
+      if (cfg.stack3) {
+        const s3 = createStack(cfg.stack3);
+        sec.appendChild(s3);
+      }
 
-  // 👇 Si es el último bloque, márcalo como fullscreen
-  if (idx === blocks.length - 1 ) {
-    sec.classList.add("fullscreen");
-  }
+      // 👇 Si es el último bloque, márcalo como fullscreen
+      if (idx === blocks.length - 1) {
+        sec.classList.add("fullscreen");
+      }
 
-  return sec;
-});
+      return sec;
+    });
 
 
 
