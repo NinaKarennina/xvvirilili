@@ -193,13 +193,14 @@ if (!document.getElementById(STYLE_ID)) {
 }
 
 .cd-pill{
-  max-width: calc(var(--k) * 70px);
-  max-height: calc(var(--k) * 60px);
+  min-width: calc(var(--k) * 70px);
+  min-height: calc(var(--k) * 60px);
   border-radius: 999px;
   padding-inline: calc(var(--k) * 16px);
   background: var(--cd-pill-color, #A77A71);
-  display: grid;
-  place-items: center;
+  display:flex;
+  align-items: center;
+  justify-content: center;
   box-shadow: 0 1px 0 rgba(255,255,255,.35) inset,
               0 10px 30px rgba(0,0,0,.18);
 }
@@ -209,11 +210,11 @@ if (!document.getElementById(STYLE_ID)) {
   align-items: center;
   justify-content: center;
   gap: 0;
-  height: 100%;
+  max-height: calc(var(--k) * 10px);
 }
 
 .cd-digit{
-  height: 50%;
+  max-height: calc(var(--k) * 40px);
   width: auto;
   display: block;
   object-fit: contain;
