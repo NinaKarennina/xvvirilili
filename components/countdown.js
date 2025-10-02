@@ -189,12 +189,12 @@ if (!document.getElementById(STYLE_ID)) {
   align-items: center;
   justify-content: center;
   gap: calc(var(--k) * 16px);
-  max-width: 86%;                  /* evita que toque los bordes dorados */
+  max-width: 86%;                /* evita que toque los bordes dorados */
 }
 
 .cd-pill{
-  min-width: calc(var(--k) * 70px);
-  min-height: calc(var(--k) * 60px);
+  max-width: calc(var(--k) * 70px);
+  max-height: calc(var(--k) * 60px);
   border-radius: 999px;
   padding-inline: calc(var(--k) * 16px);
   background: var(--cd-pill-color, #A77A71);
