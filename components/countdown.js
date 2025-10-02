@@ -138,40 +138,50 @@ if (!document.getElementById(STYLE_ID)) {
   const style = document.createElement('style');
   style.id = STYLE_ID;
   style.textContent = `
-    .cd-root{
+    /* ⬇️ Reemplaza por esto en el CSS inyectado del countdown */
+
+/* 1) El root no cambia mucho, pero vamos a limitarlo a 80% del iPhone 15 PM */
+.cd-root{
   position: relative;
-  width: var(--cd-width, min(92vw, 720px));
+  /* 80% del ancho del iPhone 15 Pro Max (430px) con fallback + 80vw como límite móvil */
+  width: var(--cd-width, min(80vw, calc(var(--device-w, 430px) * 0.80)));
   margin-inline: auto;
   display: grid;
   place-items: center;
   user-select: none;
-  /* factor de escala (lo pone JS). Fallback=1 */
   --k: var(--cd-scale, 1);
 }
 
+/* 2) El fondo ocupa el ancho del root */
 .cd-bg{
   display:block;
-  max-width:100%;
+  width: 100%;        /* 👈 asegura match exacto con el root */
   height:auto;
   pointer-events:none;
   user-select:none;
   -webkit-user-drag:none;
 }
 
-/* overlay centrado */
+/* 3) Capa de UI correctamente centrada y del tamaño del root */
 .cd-layer{
   position:absolute;
+  inset: 0;           /* 👈 ocupa todo el root (iOS fix) */
+  width: 100%;
+  height: 100%;
   display:flex;
   align-items:center;
   justify-content:center;
-  max-width:40vh;
+  /* wrap si hace falta, pero normalmente no lo necesitarás */
+  flex-wrap: nowrap;
   gap: calc(var(--k) * 16px);
+  max-width: none;    /* 👈 elimina el viejo 40vh que desalineaba en iOS */
 }
 
+/* 4) Pastillas y dígitos (igual que antes) */
 .cd-pill{
   min-width: calc(var(--k) * 70px);
-  min-height:    calc(var(--k) * 60px);
-  border-radius: 999px; /* se mantiene “pastilla” */
+  min-height: calc(var(--k) * 60px);
+  border-radius: 999px;
   padding-inline: calc(var(--k) * 16px);
   background: var(--cd-pill-color, #A77A71);
   display:grid;
@@ -183,18 +193,19 @@ if (!document.getElementById(STYLE_ID)) {
 .cd-digit-row{
   display:flex;
   align-items:center;
+  justify-content:center;
   gap: calc(var(--k) * 4px);
   height: 100%;
 }
 
 .cd-digit{
-  height: 50%;          /* relativo al alto del pill → ya escala */
+  height: 50%;
   width: auto;
   display:block;
   object-fit: contain;
 }
 
-/* Etiquetas opcionales (si las usas) */
+/* (Opcional) etiquetas si las usas */
 .cd-labels{
   display:flex;
   justify-content:center;

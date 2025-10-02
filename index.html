@@ -1,21 +1,40 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>XV Viri & Lili</title>
   <link rel="icon" type="image/x-icon" href="./images/twinsicon.png" />
   <style>
-    html, body { margin: 0; padding: 0; background: #000; color: #fff; }
-    main { display:block; }
+    :root {
+      /* Base “iPhone 14 Pro Max” (CSS px) con adaptación hacia abajo */
+      --device-w: min(100vw, 430px);
+      --device-h: min(100svh, 932px);
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: url("./images/backgroundclean.webp") center center / cover no-repeat;
+      color: #fff;
+    }
+
+    main {
+      display: block;
+      width: var(--device-w);
+      margin-inline: auto;
+    }
   </style>
 </head>
+
 <body>
   <main id="app"></main>
 
   <script type="module">
     import { createHeroBlock } from './blocks/hero.js';
-    import { createStack }   from './blocks/stack.js';
+    import { createStack } from './blocks/stack.js';
     import { createCountdown } from './components/countdown.js';
     import { initParallax, initReveal } from './lib/scrollEffects.js';
 
@@ -29,100 +48,146 @@
     // Define tus bloques como datos (¡escalable!)
     const blocks = [
       {
-        background:   './images/topbg.webp',
-        topLeft:      './images/flowers.webp',
-        rightCenter:  './images/lateralflowersrose.webp',
-        center:       './images/mainimage.webp',
-        bgSpeed: 0.50,
-      },
-      {
-        background:   './images/middlebg.webp',
-        leftCenter:   './images/lateralflowersblue.webp',
-        bgSpeed: 0.50,
-        bgPosition: 0.50,
+        // fondo ya no lo necesitamos, lo dejamos vacío o quitamos la propiedad
+        background: '',
+
+        // overlays decorativos (se mantienen absolutos)
+        topLeft: './images/flowers.webp',
+        rightCenter: './images/lateralflowersrose.webp',
+
+        // stack con la imagen principal
         stack3: {
-          heights: [20,20,10, 10],
-          width: "min(90vw,640px)",
           items: [
-            { kind:"image", src:"./images/secondview1.webp", alt:"Arriba" },
-            { kind:"image", src:"./images/secondview2a.webp",alt:"Abajo" },
-            { kind:"image", src:"./images/secondview2b.webp",alt:"Abajo" },
-            { kind:"buttonImage", src:"./images/secondview3.webp", alt:"Iglesia", onClick: () => window.open('https://maps.app.goo.gl/GURtuyuBFNBbT698A','_blank') },
+            { kind: "html", html: "<div style='height:10vh'></div>" },
+            {
+              kind: "image",
+              src: "./images/mainimage.webp",
+              alt: "Imagen principal",
+              variant: "principal"   // 👈 ocupará ~70% del alto
+            }
           ]
         }
       },
       {
-        background:   './images/middlebg.webp',
-        rightCenter:  './images/lateralflowersrose.webp',
-        bgSpeed: 0.50,
-        bgPosition: 0.50,
+        background: '',                         // sin fondo
+        leftCenter: './images/lateralflowersblue.webp', // decorativo lateral
+
         stack3: {
-          heights: [10,30,0],
-          width: "min(90vw,640px)",
+          gap: "16px",
           items: [
-            { kind:"image", src:"./images/thirdview1.webp", alt:"Arriba" },
-            { kind:"image", src:"./images/thirdview2.webp",alt:"Abajo" },
-            { kind:"buttonImage", src:"./images/secondview3.webp", alt:"Salon", onClick: () => window.open('https://maps.app.goo.gl/jc2dkAwCwuSifuNR7','_blank') },
+            { kind: "image", src: "./images/secondview1.webp", alt: "Letrero", variant: "wideText" },
+            { kind: "image", src: "./images/secondview2a.webp", alt: "Cuadrada", variant: "square" },
+            { kind: "image", src: "./images/secondview2b.webp", alt: "Letrero", variant: "wideText" },
+            {
+              kind: "buttonImage",
+              src: "./images/secondview3.webp",
+              alt: "Iglesia",
+              variant: "wideText",
+              onClick: () => window.open('https://maps.app.goo.gl/GURtuyuBFNBbT698A', '_blank')
+            }
           ]
         }
-      },
-      {
-        background:   './images/bottombg.webp',
-        leftCenter:  './images/lateralflowersblue.webp',
-        rightCenter:  './images/lateralflowersrose.webp',
-        bottomCenter: './images/flowersbottomcenter.webp',
-        bottomRight:'./images/flowersbottomright.webp',
-        bottomLeft:'./images/princessleft.webp',
-        bgSpeed: 0.50,
-        bgPosition: 1,
-        stack3: {
-          heights: [15, 20, 10, 1,30],
-          width: "min(90vw, 640px)",
-          items: [
-            { kind: "image", src: "./images/finalview1.webp" },
-            { kind: "node",  node: registry.countdown({
-              target: '2025-11-08T17:00:00-06:00',
-              bgSrc: './images/countdown-bg.webp',
-              digitsPath: d => `./digits/${d}.png`,
-              zeroPad: { days: 2, hours: 2, minutes: 2, seconds: 2 },
-              showLabels: false,
-              scaleWidth: 'min(92vw,700px)',
-            })},
-            { kind: "buttonImage", src: "./images/confirmbutton.webp",
-              onClick: () => {} },
-            { kind: "image",  src: "./images/finalview2.webp" },
-            
-          ]
-        },
       }
+      ,
+      {
+  // sin fondo ni parallax
+  background: '',
+  rightCenter: './images/lateralflowersrose.webp',
+
+  // el stack crece por contenido (quita heights/width)
+  stack3: {
+    gap: "16px",
+    items: [
+      // 1) letrero ancho
+      { kind: "image", src: "./images/thirdview1.webp", alt: "Letrero", variant: "wideText" },
+
+      // 2) letrero ancho (si este fuera cuadrado, usa variant: "square")
+      { kind: "image", src: "./images/thirdview2.webp", alt: "Letrero", variant: "wideText" },
+
+      // 3) botón (letrero ancho) con su onClick intacto
+      { 
+        kind: "buttonImage",
+        src: "./images/secondview3.webp",
+        alt: "Salón",
+        variant: "wideText",
+        onClick: () => window.open('https://maps.app.goo.gl/jc2dkAwCwuSifuNR7', '_blank')
+      }
+    ]
+  }
+}
+,
+      {
+  // sin fondo ni parallax; dejamos las decoraciones absolutas
+  background: '',
+  leftCenter:   './images/lateralflowersblue.webp',
+  rightCenter:  './images/lateralflowersrose.webp',
+  bottomCenter: './images/flowersbottomcenter.webp',
+  bottomRight:  './images/flowersbottomright.webp',
+  bottomLeft:   './images/princessleft.webp',
+
+  stack3: {
+    gap: "20px",               // un poco más de aire en el bloque final
+    items: [
+      { kind: "html", html: "<div style='height:10vh'></div>" },
+      // 1) letrero superior
+      { kind: "image", src: "./images/finalview1.webp", alt: "Final 1", variant: "wideText" },
+
+      // 2) countdown (escala a ~90% del ancho base del iPhone)
+      { 
+        kind: "node",
+        node: registry.countdown({
+          target: '2025-11-08T17:00:00-06:00',
+          bgSrc: './images/countdown-bg.webp',
+          digitsPath: d => `./digits/${d}.png`,
+          zeroPad: { days: 2, hours: 2, minutes: 2, seconds: 2 },
+          showLabels: false,
+          // clave: atarlo a tu "device width"
+          scaleWidth: 'calc(var(--device-w, 430px) * 0.90)',
+        })
+      },
+
+      // 3) botón de confirmación (imagen ancha, centrada)
+      { 
+        kind: "buttonImage",
+        src: "./images/confirmbutton.webp",
+        alt: "Confirmar asistencia",
+        variant: "wideText",
+        onClick: () => { /* tu handler */ }
+      },
+
+      // 4) letrero inferior
+      { kind: "image", src: "./images/finalview2.webp", alt: "Final 2", variant: "wideText" },
+    ]
+  },
+}
+
     ];
 
     // Crea y monta todos los bloques
-    const nodes = blocks.map(cfg => {
-    // si hay un centerComponent, creamos el nodo
-    let centerNode = null;
-    if (cfg.centerComponent && registry[cfg.centerComponent]) {
-      centerNode = registry[cfg.centerComponent](cfg.centerProps || {});
-    }
+    const nodes = blocks.map((cfg, idx) => {
+  const sec = createHeroBlock({ ...cfg, centerNode: null });
 
-    // creamos el hero; le pasamos centerNode (o null)
-    const sec = createHeroBlock({ ...cfg, centerNode });
+  if (cfg.stack3) {
+    const s3 = createStack(cfg.stack3);
+    sec.appendChild(s3);
+  }
 
-    // stack3 (si viene)
-    if (cfg.stack3) {
-      const s3 = createStack(cfg.stack3);
-      sec.appendChild(s3);
-    }
+  // 👇 Si es el último bloque, márcalo como fullscreen
+  if (idx === blocks.length - 1 ) {
+    sec.classList.add("fullscreen");
+  }
 
-    return sec;
-  });
-    
+  return sec;
+});
+
+
 
     app.append(...nodes);
-    
+
     // Efectos de scroll
     // initReveal({ rootMargin: '0px 0px -12% 0px', once: false }); // reversa al hacer scroll back
-    initParallax();
+    //initParallax();
   </script>
 </body>
+
 </html>

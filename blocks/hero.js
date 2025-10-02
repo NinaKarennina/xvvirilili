@@ -121,34 +121,49 @@ if (!document.getElementById(styleId)) {
   style.id = styleId;
   style.textContent = `
     .hero-block {
-      position: relative;
-      width: 100vw;
-      height: 100svh;
-      min-height: 100dvh;
-      overflow: hidden;
-      background: #000;
-      isolation: isolate;
-    }
+  position: relative;
+  width: var(--device-w);
+  margin-inline: auto;
+  /* Altura por contenido */
+  height: auto;
+  min-height: unset;
+  overflow: visible;
+  background: transparent;
+  isolation: isolate;
+  margin-bottom:50px
+}
 
-    /* Fondo con background-image, controlado por --bg-pos y --bg-shift */
-    .hero-block .bg-layer {
-      position: absolute;
-      inset: 0;
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: 50% var(--bg-pos, 0%);
-      /* el parallax sumará un desplazamiento en px */
-      background-position-y: calc(var(--bg-pos, 0%) + var(--bg-shift, 0px));
-      will-change: background-position;
-      z-index: -1;
-    }
+/* Fondo opcional: lo dejamos disponible pero sin parallax */
+.hero-block .bg-layer {
+  position: relative;      /* ya NO absolute para que contribuya al flujo si la usas */
+  inset: auto;
+  width: 100%;
+  height: auto;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: 50% 0%;
+  /* Sin parallax → eliminamos var(--bg-shift) */
+  will-change: auto;
+  z-index: 0;
+}
+  .hero-block.fullscreen {
+  height: var(--device-h, 100svh);
+  min-height: var(--device-h, 100svh);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom:0px;   
+}
+
+
+
 
     /* === posiciones base de overlays (igual que antes) === */
     .hero-block .img-top-left {
       position: absolute;
       top:0;
       left:0;
-      max-width:40vh ;
+      max-width:172px ;
       max-height:40vw;
       object-fit: contain;
       pointer-events: none;
@@ -168,7 +183,7 @@ if (!document.getElementById(styleId)) {
       position: absolute;
       bottom: 0;
       left: 0;
-      max-width: 50vw;
+      max-width: 466px;
       max-height: 50vh;
       object-fit: contain;
       pointer-events: none;
@@ -179,7 +194,7 @@ if (!document.getElementById(styleId)) {
       position: absolute;
       bottom: 0;
       right: 0;
-      max-width: 50vw;
+      max-width: 466px;
       max-height: 50vh;
       object-fit: contain;
       pointer-events: none;
@@ -204,7 +219,7 @@ if (!document.getElementById(styleId)) {
       top: 50%;
       right:0;
       max-height:200px ;
-      max-width: 20vw;
+      max-width: 186px;
       object-fit: contain;
       pointer-events: none;
       z-index:1;
@@ -226,7 +241,7 @@ if (!document.getElementById(styleId)) {
       position: absolute;
       bottom: 0;
       left: 50%;
-      max-width: 50vw;
+      max-width: 466px;
       max-height: 30vh;
       width: auto;
       object-fit: contain;
