@@ -183,8 +183,8 @@ if (!document.getElementById(styleId)) {
       position: absolute;
       bottom: 0;
       left: 0;
-      max-width: 466px;
-      max-height: 50vh;
+      max-width: 400px;
+      max-height: 400px;
       object-fit: contain;
       pointer-events: none;
       z-index:3;
@@ -194,8 +194,8 @@ if (!document.getElementById(styleId)) {
       position: absolute;
       bottom: 0;
       right: 0;
-      max-width: 466px;
-      max-height: 50vh;
+      max-width: 400px;
+      max-height: 400px;
       object-fit: contain;
       pointer-events: none;
       z-index: 3;
@@ -242,7 +242,7 @@ if (!document.getElementById(styleId)) {
       bottom: 0;
       left: 50%;
       max-width: 466px;
-      max-height: 30vh;
+      max-height: 200px;
       width: auto;
       object-fit: contain;
       pointer-events: none;
