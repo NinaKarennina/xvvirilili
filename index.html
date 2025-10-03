@@ -38,17 +38,19 @@
     import { createCountdown } from './components/countdown.js';
     import { initParallax, initReveal } from './lib/scrollEffects.js';
     import { initGuestModal } from './components/guestModal.js';
+    import { initAudioPlayer } from './components/audioPlayer.js';
+
 
     const app = document.getElementById('app');
 
     const guestModal = initGuestModal({
-    scriptURL: 'listadeinvitadosvirilili',  
-    title: 'Lista de invitados',
-    description: 'Déjanos tu nombre, cuántas personas vienen y un mensaje opcional.',
-    decorBottomCenterSrc: './images/flowersbottomcenter.webp',
-    decorRightCenterSrc: './images/lateralflowersrose.webp',
-    decorLeftCenterSrc: './images/lateralflowersblue.webp'
-  })
+      scriptURL: 'listadeinvitadosvirilili',
+      title: 'Lista de invitados',
+      description: 'Déjanos tu nombre, cuántas personas vienen y un mensaje opcional.',
+      decorBottomCenterSrc: './images/flowersbottomcenter.webp',
+      decorRightCenterSrc: './images/lateralflowersrose.webp',
+      decorLeftCenterSrc: './images/lateralflowersblue.webp'
+    })
 
     const registry = {
       countdown: (props) => createCountdown(props),
@@ -136,7 +138,7 @@
         bottomLeft: './images/princessleft.webp',
 
         stack3: {
-          gap: "20px",               // un poco más de aire en el bloque final
+          gap: "15px",               // un poco más de aire en el bloque final
           items: [
             { kind: "html", html: "<div style='height:1vh'></div>" },
             // 1) letrero superior
@@ -172,6 +174,11 @@
       }
 
     ];
+    const player = initAudioPlayer({
+      src: './images/virilili.mp3',   // <-- pon aquí tu archivo o URL
+      //accent: '#caa86a',             // puedes ajustar tonos si quieres
+      // width: 'min(100vw, calc(var(--device-w, 430px)))'
+    });
 
     // Crea y monta todos los bloques
     const nodes = blocks.map((cfg, idx) => {
