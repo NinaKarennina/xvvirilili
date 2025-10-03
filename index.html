@@ -37,8 +37,18 @@
     import { createStack } from './blocks/stack.js';
     import { createCountdown } from './components/countdown.js';
     import { initParallax, initReveal } from './lib/scrollEffects.js';
+    import { initGuestModal } from './components/guestModal.js';
 
     const app = document.getElementById('app');
+
+    const guestModal = initGuestModal({
+    scriptURL: 'listadeinvitadosvirilili',  
+    title: 'Lista de invitados',
+    description: 'Déjanos tu nombre, cuántas personas vienen y un mensaje opcional.',
+    decorBottomCenterSrc: './images/flowersbottomcenter.webp',
+    decorRightCenterSrc: './images/lateralflowersrose.webp',
+    decorLeftCenterSrc: './images/lateralflowersblue.webp'
+  })
 
     const registry = {
       countdown: (props) => createCountdown(props),
@@ -152,7 +162,7 @@
               src: "./images/confirmbutton.webp",
               alt: "Confirmar asistencia",
               variant: "wideText",
-              onClick: () => { /* tu handler */ }
+              onClick: () => guestModal.open()
             },
 
             // 4) letrero inferior
