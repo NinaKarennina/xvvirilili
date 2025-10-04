@@ -1,7 +1,6 @@
 // components/guestModal.js
 // Modal accesible + envío a Google Apps Script (FormData + no-cors)
 // Estilo acorde a tu invitación + decoraciones opcionales en 5 posiciones
-
 export function initGuestModal({
   scriptURL,
   title = 'Lista de invitados',
@@ -35,7 +34,7 @@ export function initGuestModal({
   position:relative;
   width:min(520px, 100%);
   max-height:min(90svh, 720px);
-  overflow:auto; overflow-x:hidden;  /* 👈 sin scroll horizontal */
+  overflow:auto; overflow-x:hidden;
   border-radius:20px;
   background:
     linear-gradient(var(--paper), var(--paper)) padding-box,
@@ -43,11 +42,11 @@ export function initGuestModal({
   border:2px solid transparent;
   color:var(--ink);
   box-shadow:0 10px 30px rgba(0,0,0,.22), 0 0 0 1px rgba(255,255,255,.6) inset;
-  padding:14px;                 /* margen exterior */
+  padding:14px;
   animation:modalIn .22s ease-out;
 }
 
-/* capa de contenido con padding uniforme a izquierda/derecha */
+/* capa de contenido con padding uniforme */
 .gm-content{ position:relative; z-index:1; padding:6px 16px 14px; }
 #guest-modal, #guest-modal *{ font-size:16px; line-height:1.25; box-sizing:border-box; }
 
@@ -66,7 +65,7 @@ export function initGuestModal({
 }
 .gm-decor.tl{ top:-14px; left:-8px; width:120px; max-width:40%; transform:rotate(6deg); }
 .gm-decor.tr{ top:-18px; right:-10px; width:120px; max-width:40%; transform:rotate(-6deg); }
-.gm-decor.bc{ bottom:-18px; left:50%; transform:translateX(-50%); width:180px; max-width:70%; }
+.gm-decor.bc{ bottom:0px; left:50%; transform:translateX(-50%); width:180px; max-width:70%; }
 .gm-decor.rc{ right:-12px; top:50%; transform:translateY(-50%) rotate(-2deg); width:110px; max-width:34%; }
 .gm-decor.lc{ left:-12px; top:50%; transform:translateY(-50%) rotate(2deg); width:110px; max-width:34%; }
 
@@ -137,28 +136,57 @@ body.modal-open{ overflow:hidden; touch-action:none; }
       <p id="guest-desc">${description}</p>
 
       <form id="guest-form" novalidate>
+        <h3 style="margin:4px 0 8px 0;">Confirmación de asistencia</h3>
+        <p style="margin:0 0 12px 0;">Por favor ayúdanos a confirmar tu asistencia antes del 20 de octubre.</p>
+
         <div class="field">
-          <label for="guest-name">Nombre</label>
-          <input id="guest-name" name="name" type="text" required autocomplete="name" maxlength="120" />
-          <span class="err" data-for="name"></span>
-        </div>
-        <div class="field">
-          <label for="guest-number">Número de personas</label>
-          <input id="guest-number" name="number" type="number" inputmode="numeric" min="1" max="50" required />
-          <span class="err" data-for="number"></span>
-        </div>
-        <div class="field">
-          <label for="guest-message">Mensaje (opcional)</label>
-          <textarea id="guest-message" name="message" rows="4" maxlength="500" placeholder="¿Algo que debamos saber?"></textarea>
-          <span class="err" data-for="message"></span>
+          <label>¿Asistirás?</label>
+          <div style="display:flex; gap:18px; align-items:center; margin-top:6px;">
+            <label style="display:flex; gap:8px; align-items:center;">
+              <input type="radio" name="attend" id="attend-yes" value="SI" required>
+              <span>Sí</span>
+            </label>
+            <label style="display:flex; gap:8px; align-items:center;">
+              <input type="radio" name="attend" id="attend-no" value="NO" required>
+              <span>No</span>
+            </label>
+          </div>
+          <span class="err" data-for="attend"></span>
         </div>
 
-        <input type="hidden" id="guest-token" name="token" value="">
+        <div class="field">
+          <label for="family">Familia:</label>
+          <input id="family" name="family" type="text" required maxlength="120" placeholder="Apellido o nombres">
+          <span class="err" data-for="family"></span>
+        </div>
+
+        <div class="field">
+          <label>Número de personas que asistirán:</label>
+          <div style="display:grid; grid-template-columns: auto 90px; align-items:center; gap:10px; margin-top:6px;">
+            <span>• Adultos:</span>
+            <input id="adults" name="adults" type="number" min="0" max="50" value="0" inputmode="numeric">
+            <span>• Niños:</span>
+            <input id="kids" name="kids" type="number" min="0" max="50" value="0" inputmode="numeric">
+          </div>
+          <span class="err" data-for="counts"></span>
+        </div>
+
+        <div class="field">
+          <label for="message">Mensaje (opcional)</label>
+          <textarea id="message" name="message" rows="3" maxlength="500" placeholder="¿Algo que debamos saber?"></textarea>
+        </div>
+
+        <div id="guest-status" role="status" aria-live="polite" style="margin-top:10px;"></div>
+
+        <p style="margin:12px 2px 0 2px; opacity:.95;">
+          ¡Gracias por confirmar!<br>
+          Te esperamos con mucha ilusión para disfrutar, divertirnos y bailar juntos. 🎉 💃🕺
+        </p>
+
         <div class="actions">
           <button type="button" class="btn-ghost" id="guest-cancel">Cancelar</button>
-          <button type="submit" class="btn-gold"  id="guest-submit">Enviar</button>
+          <button type="submit" class="btn-gold" id="guest-submit">Enviar</button>
         </div>
-        <div id="guest-status" role="status" aria-live="polite"></div>
       </form>
     </div>
   </div>
@@ -170,15 +198,19 @@ body.modal-open{ overflow:hidden; touch-action:none; }
   const form      = overlay.querySelector('#guest-form');
   const submitBtn = overlay.querySelector('#guest-submit');
   const statusEl  = overlay.querySelector('#guest-status');
-  const nameEl    = overlay.querySelector('#guest-name');
-  const numEl     = overlay.querySelector('#guest-number');
-  const msgEl     = overlay.querySelector('#guest-message');
+
+  const yesEl     = overlay.querySelector('#attend-yes');
+  const noEl      = overlay.querySelector('#attend-no');
+  const familyEl  = overlay.querySelector('#family');
+  const adultsEl  = overlay.querySelector('#adults');
+  const kidsEl    = overlay.querySelector('#kids');
+  const msgEl     = overlay.querySelector('#message');
 
   function onEsc(e){ if(e.key === 'Escape') close(); }
   function open(){
     overlay.setAttribute('aria-hidden','false');
     document.body.classList.add('modal-open');
-    setTimeout(()=>nameEl.focus(),0);
+    setTimeout(()=> (yesEl?.focus() ?? familyEl?.focus()), 0);
     document.addEventListener('keydown', onEsc);
   }
   function close(){
@@ -187,16 +219,40 @@ body.modal-open{ overflow:hidden; touch-action:none; }
     document.removeEventListener('keydown', onEsc);
     statusEl.textContent = '';
     form.reset();
+    refreshCountsState();
   }
   overlay.addEventListener('click', (e)=>{ if(e.target === overlay) close(); });
   closeBtn.addEventListener('click', close);
   overlay.querySelector('#guest-cancel').addEventListener('click', close);
 
   function setError(n, msg){ const el = form.querySelector('.err[data-for="'+n+'"]'); if(el) el.textContent = msg || ''; }
+
+  // Habilitar/deshabilitar conteos según Sí/No
+  function refreshCountsState(){
+    const no = noEl.checked;
+    adultsEl.disabled = no;
+    kidsEl.disabled = no;
+    if (no) { adultsEl.value = '0'; kidsEl.value = '0'; }
+  }
+  yesEl.addEventListener('change', refreshCountsState);
+  noEl.addEventListener('change', refreshCountsState);
+  refreshCountsState();
+
   function validate(){
-    let ok = true; setError('name',''); setError('number','');
-    if(!nameEl.value.trim()){ setError('name','Escribe tu nombre.'); ok=false; }
-    const n = Number(numEl.value); if(!n || n<1 || n>50){ setError('number','Ingresa un número entre 1 y 50.'); ok=false; }
+    let ok = true;
+    setError('attend',''); setError('family',''); setError('counts','');
+
+    const attend = yesEl.checked ? 'SI' : (noEl.checked ? 'NO' : '');
+    if (!attend) { setError('attend','Selecciona una opción.'); ok = false; }
+
+    if (!familyEl.value.trim()) { setError('family','Escribe el nombre de la familia.'); ok = false; }
+
+    const a = Number(adultsEl.value||0), k = Number(kidsEl.value||0);
+    if (attend === 'SI'){
+      if (!Number.isFinite(a) || a<0 || !Number.isFinite(k) || k<0 || (a+k)<1){
+        setError('counts','Indica al menos 1 persona (adultos + niños).'); ok = false;
+      }
+    }
     return ok;
   }
 
@@ -204,15 +260,18 @@ body.modal-open{ overflow:hidden; touch-action:none; }
     e.preventDefault(); if(!validate()) return;
     submitBtn.disabled = true; statusEl.textContent = 'Enviando…';
 
+    const attend = yesEl.checked ? 'SI' : 'NO';
     const fd = new FormData();
-    fd.append('name',   nameEl.value.trim().slice(0,120));
-    fd.append('number', String(Number(numEl.value)));
+    fd.append('attend', attend);
+    fd.append('family', familyEl.value.trim().slice(0,120));
+    fd.append('adults', String(Math.max(0, Number(adultsEl.value||0))));
+    fd.append('kids',   String(Math.max(0, Number(kidsEl.value||0))));
     fd.append('message',(msgEl.value || '').trim().slice(0,500));
-    // fd.append('token', document.getElementById('guest-token').value);
+    // fd.append('token', '...'); // cuando agregues el secreto
 
     try{
-      await fetch("https://script.google.com/macros/s/AKfycbzVjUhSVbfHML1UB4GD_4_CjLc5HpDPIOHhl2q0X1QqSKr-Bpe7EkDM0l6cO58QA4gH/exec", { method:'POST', body: fd, mode:'no-cors' });
-      statusEl.textContent = '¡Gracias! Tu registro quedó guardado.';
+      await fetch("https://script.google.com/macros/s/AKfycbyVY_LKXzrvVOeVVZlQFzNESQ0x05xctPWkRhPrsVhR5DLlUxd5Pf6OFG6YcPHms5rq-Q/exec", { method:'POST', body: fd, mode:'no-cors' });
+      statusEl.textContent = '¡Registro enviado! 🎉';
       setTimeout(close, 900);
     }catch(err){
       statusEl.textContent = 'Fallo de red: ' + err.message;

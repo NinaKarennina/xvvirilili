@@ -18,7 +18,7 @@ export function initAudioPlayer({
         --am-gold-after: #caa86a77 }
 
 .am-root{
-  position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+  position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
   width: ${width};
   z-index: 9990;
   padding-top: ${topOffset};
