@@ -138,7 +138,7 @@ body.modal-open{ overflow:hidden; touch-action:none; }
 
         <div class="field">
           <label>¿Asistirás?</label>
-          <div style="display:flex; gap:18px; align-items:center; margin-top:6px;">
+          <div style="display:flex; gap:2px; align-items:center; margin-top:6px;">
             <label style="display:flex; gap:2px; align-items:center;">
               <input type="radio" name="attend" id="attend-yes" value="SI" required>
               <span>Sí</span>
