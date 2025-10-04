@@ -132,9 +132,6 @@ body.modal-open{ overflow:hidden; touch-action:none; }
     ${decorLeftCenterSrc ? `<img class="gm-decor lc" alt="" aria-hidden="true" src="${decorLeftCenterSrc}">` : ``}
 
     <div class="gm-content">
-      <h2 id="guest-modal-title">${title}</h2>
-      <p id="guest-desc">${description}</p>
-
       <form id="guest-form" novalidate>
         <h3 style="margin:4px 0 8px 0;">Confirmación de asistencia</h3>
         <p style="margin:0 0 12px 0;">Por favor ayúdanos a confirmar tu asistencia antes del 20 de octubre.</p>
@@ -169,11 +166,6 @@ body.modal-open{ overflow:hidden; touch-action:none; }
             <input id="kids" name="kids" type="number" min="0" max="50" value="0" inputmode="numeric">
           </div>
           <span class="err" data-for="counts"></span>
-        </div>
-
-        <div class="field">
-          <label for="message">Mensaje (opcional)</label>
-          <textarea id="message" name="message" rows="3" maxlength="500" placeholder="¿Algo que debamos saber?"></textarea>
         </div>
 
         <div id="guest-status" role="status" aria-live="polite" style="margin-top:10px;"></div>
@@ -266,7 +258,6 @@ body.modal-open{ overflow:hidden; touch-action:none; }
     fd.append('family', familyEl.value.trim().slice(0,120));
     fd.append('adults', String(Math.max(0, Number(adultsEl.value||0))));
     fd.append('kids',   String(Math.max(0, Number(kidsEl.value||0))));
-    fd.append('message',(msgEl.value || '').trim().slice(0,500));
     // fd.append('token', '...'); // cuando agregues el secreto
 
     try{
