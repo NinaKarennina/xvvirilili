@@ -137,7 +137,7 @@
         stack3: {
           gap: "8px",               // un poco más de aire en el bloque final
           items: [
-            { kind: "html", html: "<div style='height:1vh'></div>" },
+            { kind: "html", html: "<div style='height:2vh'></div>" },
             // 1) letrero superior
             { kind: "image", src: "./images/finalview1.webp", alt: "Final 1", variant: "wideText" },
 
@@ -156,16 +156,16 @@
             },
 
             // 3) botón de confirmación (imagen ancha, centrada)
-            {
-              kind: "buttonImage",
-              src: "./images/confirmbutton.webp",
-              alt: "Confirmar asistencia",
-              variant: "wideText",
-              onClick: () => guestModal.open()
-            },
+            // {
+            //   kind: "buttonImage",
+            //   src: "./images/confirmbutton.webp",
+            //   alt: "Confirmar asistencia",
+            //   variant: "wideText",
+            //   onClick: () => guestModal.open()
+            // },
 
-            // 4) letrero inferior
-            { kind: "image", src: "./images/finalview2.webp", alt: "Final 2", variant: "wideText" },
+            // // 4) letrero inferior
+            // { kind: "image", src: "./images/finalview2.webp", alt: "Final 2", variant: "wideText" },
           ]
         },
       }
